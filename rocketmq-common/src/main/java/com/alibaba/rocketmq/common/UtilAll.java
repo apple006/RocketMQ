@@ -47,6 +47,9 @@ public class UtilAll {
 
 
     public static int getPid() {
+        /*sav : http://www.javaweb.cc/help/JavaAPI1.6/java/lang/management/ManagementFactory.html
+        * ava.lang.management.RuntimeMXBean是Java 虚拟机的运行时系统的管理接口。使用它可以获取正在运行的 Java 虚拟机等信息，包括获取PID
+        * */
         RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();
         String name = runtime.getName(); // format: "pid@hostname"
         try {

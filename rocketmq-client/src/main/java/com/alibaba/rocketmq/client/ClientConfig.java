@@ -57,7 +57,9 @@ public class ClientConfig {
     }
 
     public void changeInstanceNameToPID() {
+        /*sav ?: 如果System.getProperty("rocketmq.client.name", "DEFAULT")(特殊JDK版本?特殊系统?)*/
         if (this.instanceName.equals("DEFAULT")) {
+            /*sav : instanceName=>PID,MQClientInstance使用IP@instanceName作clientid,MQClientManager.factoryTable以clientid为KEY */
             this.instanceName = String.valueOf(UtilAll.getPid());
         }
     }

@@ -71,7 +71,7 @@ public class DefaultMQProducerImpl implements MQProducerInner {
 
     public DefaultMQProducerImpl(final DefaultMQProducer defaultMQProducer, RPCHook rpcHook) {
 
-        /*sav : DefaultMQProducerImpl的构造传入DefaultMQProducer和RPCHook,循环引用?*/
+        /*sav ?: DefaultMQProducerImpl的构造传入DefaultMQProducer和RPCHook,循环引用?*/
 
         this.defaultMQProducer = defaultMQProducer;
         this.rpcHook = rpcHook;
@@ -175,14 +175,17 @@ public class DefaultMQProducerImpl implements MQProducerInner {
             /*sav : 检查配置(组名不为空,不为默认保留组名)*/
             this.checkConfig();
 
+            /*sav ?: CLIENT_INNER_PRODUCER做什么用的*/
             if (!this.defaultMQProducer.getProducerGroup().equals(MixAll.CLIENT_INNER_PRODUCER_GROUP)) {
                 this.defaultMQProducer.changeInstanceNameToPID();
             }
 
+            /*sav : MQClientInstance使用IP@instanceName作clientid,MQClientManager.factoryTable以clientid为KEY */
             this.mQClientFactory =
                     MQClientManager.getInstance().getAndCreateMQClientInstance(this.defaultMQProducer,
                         rpcHook);
 
+            /*sav : 以组名为key注册生产者*/
             boolean registerOK =
                     mQClientFactory.registerProducer(this.defaultMQProducer.getProducerGroup(), this);
             if (!registerOK) {
@@ -217,6 +220,8 @@ public class DefaultMQProducerImpl implements MQProducerInner {
 
 
     private void checkConfig() throws MQClientException {
+
+        /*sav : 不包含空白字符,由字母数字组成,不超过255个字符*/
         Validators.checkGroup(this.defaultMQProducer.getProducerGroup());
 
         if (null == this.defaultMQProducer.getProducerGroup()) {
