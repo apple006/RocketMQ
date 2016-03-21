@@ -70,6 +70,9 @@ public class DefaultMQProducerImpl implements MQProducerInner {
 
 
     public DefaultMQProducerImpl(final DefaultMQProducer defaultMQProducer, RPCHook rpcHook) {
+
+        /*sav : DefaultMQProducerImpl的构造传入DefaultMQProducer和RPCHook,循环引用?*/
+
         this.defaultMQProducer = defaultMQProducer;
         this.rpcHook = rpcHook;
     }
@@ -163,9 +166,13 @@ public class DefaultMQProducerImpl implements MQProducerInner {
 
     public void start(final boolean startFactory) throws MQClientException {
         switch (this.serviceState) {
+
+        /*sav : 初始化的producer是CREATE_JUST,首先设置状态为启动失败,*/
+
         case CREATE_JUST:
             this.serviceState = ServiceState.START_FAILED;
 
+            /*sav : 检查配置(组名不为空,不为默认保留组名)*/
             this.checkConfig();
 
             if (!this.defaultMQProducer.getProducerGroup().equals(MixAll.CLIENT_INNER_PRODUCER_GROUP)) {
