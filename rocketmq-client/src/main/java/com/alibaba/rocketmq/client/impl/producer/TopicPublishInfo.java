@@ -25,6 +25,7 @@ import com.alibaba.rocketmq.common.message.MessageQueue;
 /**
  * @author shijia.wxr<vintage.wang@gmail.com>
  * @since 2013-7-24
+ * baidu:Producer使用的保存MessageQueue的数据结构
  */
 public class TopicPublishInfo {
     private boolean orderTopic = false;

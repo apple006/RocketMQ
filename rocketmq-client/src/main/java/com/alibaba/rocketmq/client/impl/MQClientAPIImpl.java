@@ -95,6 +95,8 @@ public class MQClientAPIImpl {
         this.clientRemotingProcessor = clientRemotingProcessor;
 
         this.remotingClient.registerRPCHook(rpcHook);
+
+        /* sav : ClientRemotingProcessor注册入 NettyRemotingClient.processorTable,NettyRemotingClient.publicExecutor线程池(线程Index原子加1)*/
         this.remotingClient.registerProcessor(RequestCode.CHECK_TRANSACTION_STATE,
             this.clientRemotingProcessor, null);
 

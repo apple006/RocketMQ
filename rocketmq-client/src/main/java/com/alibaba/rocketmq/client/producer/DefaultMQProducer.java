@@ -67,10 +67,10 @@ public class DefaultMQProducer extends ClientConfig implements MQProducer {
 
     public DefaultMQProducer(final String producerGroup, RPCHook rpcHook) {
 
-        /*sav : 构造函数设置DefaultMQProducer实例私有变量producerGroup,
+        /*1 sav : 构造函数设置DefaultMQProducer实例私有变量producerGroup,
                 实例化不可序列化(transient)的DefaultMQProducerImpl类型*/
 
-        /*sav : set the private variable which named producerGroup of DefaultMQProducer Instance
+        /*2 sav : set the private variable which named producerGroup of DefaultMQProducer Instance
          * create the DefaultMQProducerImpl Instance and set value to protected variable of DefaultMQProducer Instance
           * */
 

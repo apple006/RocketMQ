@@ -71,7 +71,7 @@ public class DefaultMQProducerImpl implements MQProducerInner {
 
     public DefaultMQProducerImpl(final DefaultMQProducer defaultMQProducer, RPCHook rpcHook) {
 
-        /*sav ?: DefaultMQProducerImpl的构造传入DefaultMQProducer和RPCHook,循环引用?*/
+        /*3.1 sav ?: DefaultMQProducerImpl的构造传入DefaultMQProducer和RPCHook,循环引用?*/
 
         this.defaultMQProducer = defaultMQProducer;
         this.rpcHook = rpcHook;
@@ -167,12 +167,12 @@ public class DefaultMQProducerImpl implements MQProducerInner {
     public void start(final boolean startFactory) throws MQClientException {
         switch (this.serviceState) {
 
-        /*sav : 初始化的producer是CREATE_JUST,首先设置状态为启动失败,*/
+        /*3.1 sav : 初始化的producer是CREATE_JUST,首先设置状态为启动失败,*/
 
         case CREATE_JUST:
             this.serviceState = ServiceState.START_FAILED;
 
-            /*sav : 检查配置(组名不为空,不为默认保留组名)*/
+            /*3.1.1 sav : 检查配置(组名不为空,不为默认保留组名)*/
             this.checkConfig();
 
             /*sav ?: CLIENT_INNER_PRODUCER做什么用的*/
@@ -183,8 +183,9 @@ public class DefaultMQProducerImpl implements MQProducerInner {
             /* sav : MQClientInstance使用IP@instanceName作clientid注册到MQClientManager.factoryTable(ConcurrentHashMap)
             * MQClientManager.factoryTable以clientid为KEY
             * 这里的client包括生产者和消费者
+            * MQClientInstance中实例化NettyRemotingClient作为remotingClient
+            * 服务器与客户端通过传递RemotingCommand来交互
             */
-
             this.mQClientFactory =
                     MQClientManager.getInstance().getAndCreateMQClientInstance(this.defaultMQProducer,
                         rpcHook);
@@ -195,6 +196,8 @@ public class DefaultMQProducerImpl implements MQProducerInner {
             * */
             boolean registerOK =
                     mQClientFactory.registerProducer(this.defaultMQProducer.getProducerGroup(), this);
+
+
             if (!registerOK) {
                 this.serviceState = ServiceState.CREATE_JUST;
                 throw new MQClientException("The producer group[" + this.defaultMQProducer.getProducerGroup()
@@ -202,6 +205,7 @@ public class DefaultMQProducerImpl implements MQProducerInner {
                         + FAQUrl.suggestTodo(FAQUrl.GROUP_NAME_DUPLICATE_URL), null);
             }
 
+            /* sav : 缓存TopKey(有默认值),baidu:Producer使用的保存MessageQueue的数据结构*/
             this.topicPublishInfoTable
                 .put(this.defaultMQProducer.getCreateTopicKey(), new TopicPublishInfo());
 
