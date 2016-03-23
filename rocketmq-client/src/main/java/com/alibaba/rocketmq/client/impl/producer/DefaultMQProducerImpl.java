@@ -180,12 +180,19 @@ public class DefaultMQProducerImpl implements MQProducerInner {
                 this.defaultMQProducer.changeInstanceNameToPID();
             }
 
-            /*sav : MQClientInstance使用IP@instanceName作clientid,MQClientManager.factoryTable以clientid为KEY */
+            /* sav : MQClientInstance使用IP@instanceName作clientid注册到MQClientManager.factoryTable(ConcurrentHashMap)
+            * MQClientManager.factoryTable以clientid为KEY
+            * 这里的client包括生产者和消费者
+            */
+
             this.mQClientFactory =
                     MQClientManager.getInstance().getAndCreateMQClientInstance(this.defaultMQProducer,
                         rpcHook);
 
-            /*sav : 以组名为key注册生产者*/
+            /* sav : 以组名为key注册生产者
+            * 将this注册入MQClientInstance的producerTable(相似作用的集合都使用的ConcurrentHashMap)
+            * MQProducerInner:interface
+            * */
             boolean registerOK =
                     mQClientFactory.registerProducer(this.defaultMQProducer.getProducerGroup(), this);
             if (!registerOK) {
