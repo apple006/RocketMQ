@@ -217,11 +217,13 @@ public class MQClientInstance {
                         log.error("ScheduledTask fetchNameServerAddr exception", e);
                     }
                 }
+                /* sav : 以固定周期频率,心跳连接,初始化延迟1000 * 10ms开始执行，每隔1000 * 60 * 2ms重新执行一次任务。*/
             }, 1000 * 10, 1000 * 60 * 2, TimeUnit.MILLISECONDS);
         }
 
         this.scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
 
+            /*sav:ing*/
             @Override
             public void run() {
                 try {
