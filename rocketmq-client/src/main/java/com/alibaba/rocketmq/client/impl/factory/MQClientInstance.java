@@ -166,7 +166,7 @@ public class MQClientInstance {
 
     public void start() throws MQClientException {
 
-        /*4 sav : fastjson版本冲突检测*/
+        /* sav1.4 : fastjson版本冲突检测*/
         PackageConflictDetect.detectFastjson();
 
         synchronized (this) {
@@ -178,7 +178,7 @@ public class MQClientInstance {
                         this.clientConfig.setNamesrvAddr(this.mQClientAPIImpl.fetchNameServerAddr());
                     }
                     //Start request-response channel
-                    /*4.1 sav : netty相关回头再看,先看rocket*/
+                    /* sav : netty相关回头再看,先看rocket*/
                     this.mQClientAPIImpl.start();
                     //Start various schedule tasks
                     this.startScheduledTask();

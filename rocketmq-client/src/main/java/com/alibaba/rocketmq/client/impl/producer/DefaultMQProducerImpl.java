@@ -71,8 +71,11 @@ public class DefaultMQProducerImpl implements MQProducerInner {
 
     public DefaultMQProducerImpl(final DefaultMQProducer defaultMQProducer, RPCHook rpcHook) {
 
-        /*3.1 sav ?: DefaultMQProducerImpl的构造传入DefaultMQProducer和RPCHook,循环引用?*/
-
+        /* sav1.2 : DefaultMQProducerImpl的构造传入DefaultMQProducer和RPCHook,循环引用?*/
+        /* sav : 循环引用在rocket里还是挺多的,推测由于很多交叉调用,这样写可以减少很多复杂度
+        * 而且通常一个服务器上不会有太多的producer实例,而且一旦客户端管理退出,整个应用推出,jvm会回收应用的内存
+        * 但是还是有一点要注意,不要写多线程中每个线程用不同的group私有创建producer这类的代码,
+        * 当然一般是不会有人这么干的*/
         this.defaultMQProducer = defaultMQProducer;
         this.rpcHook = rpcHook;
     }
@@ -167,15 +170,15 @@ public class DefaultMQProducerImpl implements MQProducerInner {
     public void start(final boolean startFactory) throws MQClientException {
         switch (this.serviceState) {
 
-        /*3.1 sav : 初始化的producer是CREATE_JUST,首先设置状态为启动失败,*/
+        /* sav1.3 : 初始化的producer是CREATE_JUST,首先设置状态为启动失败,*/
 
         case CREATE_JUST:
             this.serviceState = ServiceState.START_FAILED;
 
-            /*3.1.1 sav : 检查配置(组名不为空,不为默认保留组名)*/
+            /* sav : 检查配置(组名不为空,不为默认保留组名)*/
             this.checkConfig();
 
-            /*sav ?: CLIENT_INNER_PRODUCER做什么用的*/
+            /*sav : CLIENT_INNER_PRODUCER做什么用的?*/
             if (!this.defaultMQProducer.getProducerGroup().equals(MixAll.CLIENT_INNER_PRODUCER_GROUP)) {
                 this.defaultMQProducer.changeInstanceNameToPID();
             }
