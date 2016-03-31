@@ -34,6 +34,7 @@ import java.util.List;
  * @author shijia.wxr<vintage.wang@gmail.com>
  * @since 2013-7-25
  */
+/* sav : adapter MQProducer && DefaultMQProducerImpl*/
 public class DefaultMQProducer extends ClientConfig implements MQProducer {
     protected final transient DefaultMQProducerImpl defaultMQProducerImpl;
     private String producerGroup;
