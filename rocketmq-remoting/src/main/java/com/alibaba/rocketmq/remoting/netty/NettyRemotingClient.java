@@ -704,6 +704,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
         List<String> old = this.namesrvAddrList.get();
         boolean update = false;
 
+        /* sav : 新地址列表是否和原来一样,其实我觉得是否空的判断可以改成快速的return*/
         if (!addrs.isEmpty()) {
             if (null == old) {
                 update = true;
@@ -720,7 +721,9 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
             }
 
             if (update) {
+                /* sav : 乱序? 可能是起负载均衡的作用*/
                 Collections.shuffle(addrs);
+                /* sav : 原子更新*/
                 this.namesrvAddrList.set(addrs);
             }
         }
