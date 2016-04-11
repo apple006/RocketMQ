@@ -205,8 +205,10 @@ public class MQClientInstance {
     }
 
 
-    /* sav : 心跳检测top地址和命名服务是否相同，不同更新命名服务地址列表*/
     private void startScheduledTask() {
+
+        /* sav1.5 : 心跳检测top地址和命名服务是否相同，不同更新命名服务地址列表
+        * */
         if (null == this.clientConfig.getNamesrvAddr()) {
             this.scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
 

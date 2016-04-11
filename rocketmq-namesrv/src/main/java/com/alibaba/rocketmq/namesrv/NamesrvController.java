@@ -41,6 +41,12 @@ import com.alibaba.rocketmq.remoting.netty.NettyServerConfig;
  * @author shijia.wxr<vintage.wang@gmail.com>
  * @since 2013-7-5
  */
+
+/* sav3 : Name Server 是一个几乎无状态节点，可集群部署，节点乀间无任何信息同步
+* top注册在name server上,borker与所有name server长连接
+* Name Server 是专为 是专为 RocketMQ设计的轻量级名称服务，代码小于 1000行，
+* 具有简单、可集群横向扩展无状态等特点。将要支持的主备自动切换功能会强依赖 Name Server
+* */
 public class NamesrvController {
     private static final Logger log = LoggerFactory.getLogger(LoggerName.NamesrvLoggerName);
     // Name Server配置

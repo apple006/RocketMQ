@@ -31,6 +31,9 @@ import java.util.Set;
  * @author shijia.wxr<vintage.wang@gmail.com>
  * @since 2013-7-24
  */
+/* sav : Consumer 与Name Server 集群中的其中一个节点（随机选择）建立长连接，定期从Name Server 取Topic 路
+由信息，并向提供Topic 服务的Master、Slave 建立长连接，定时向Master、Slave 发送心跳。Consumer
+既可以从Master 订阅消息，也可以从Slave 订阅消息，订阅规则由Broker 配置决定。*/
 public interface MQConsumer extends MQAdmin {
     /**
      * If consuming failure,message will be send back to the brokers,and delay consuming some time

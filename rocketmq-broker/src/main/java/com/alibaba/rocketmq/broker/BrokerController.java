@@ -84,6 +84,9 @@ import java.net.InetSocketAddress;
  * @author shijia.wxr<vintage.wang@gmail.com>
  * @since 2013-7-26
  */
+/* sav2 : RocketMQ 支持定时消息，但是不任意间精度,支持特定的level，例如定时 5s ，10s ，1m 等
+* broker可以主从,通过borkername对应,brokerid为0的为主
+* */
 public class BrokerController {
     private static final Logger log = LoggerFactory.getLogger(LoggerName.BrokerLoggerName);
     private final BrokerConfig brokerConfig;

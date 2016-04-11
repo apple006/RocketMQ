@@ -34,7 +34,11 @@ import java.util.List;
  * @author shijia.wxr<vintage.wang@gmail.com>
  * @since 2013-7-25
  */
-/* sav : adapter MQProducer && DefaultMQProducerImpl*/
+/* sav : adapter MQProducer && DefaultMQProducerImpl
+* Producer 与Name Server 集群中的其中一个节点（随机选择）建立长连接，定期从Name Server 取Topic 路
+由信息，并向提供Topic 服务的broker Master 建立长连接，定时向Master 収送心跳。Producer 完全无状态，可
+集群部署。
+* */
 public class DefaultMQProducer extends ClientConfig implements MQProducer {
     protected final transient DefaultMQProducerImpl defaultMQProducerImpl;
     private String producerGroup;
