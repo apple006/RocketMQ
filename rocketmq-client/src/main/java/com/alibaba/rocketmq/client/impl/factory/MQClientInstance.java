@@ -207,8 +207,7 @@ public class MQClientInstance {
 
     private void startScheduledTask() {
 
-        /* sav1.5 : 心跳检测top地址和命名服务是否相同，不同更新命名服务地址列表
-        * */
+        /* sav : 心跳检测top地址和命名服务是否相同，不同更新命名服务地址列表,更新netty客户端中地址列表*/
         if (null == this.clientConfig.getNamesrvAddr()) {
             this.scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
 
@@ -224,6 +223,7 @@ public class MQClientInstance {
             }, 1000 * 10, 1000 * 60 * 2, TimeUnit.MILLISECONDS);
         }
 
+        /* sav : 心跳所有消费者及生产者中的top,可从入锁中更新客户端实例的命名服务表中top路由信息及broker列表的信息*/
         this.scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
 
             /*sav:ing*/
@@ -524,6 +524,7 @@ public class MQClientInstance {
                 Entry<String, MQConsumerInner> entry = it.next();
                 MQConsumerInner impl = entry.getValue();
                 if (impl != null) {
+                    /* sav : 可能是push或者pull两种消费者中的一种*/
                     Set<SubscriptionData> subList = impl.subscriptions();
                     if (subList != null) {
                         for (SubscriptionData subData : subList) {
