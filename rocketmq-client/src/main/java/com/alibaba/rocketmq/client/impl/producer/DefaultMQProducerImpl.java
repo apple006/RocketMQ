@@ -72,10 +72,10 @@ public class DefaultMQProducerImpl implements MQProducerInner {
     public DefaultMQProducerImpl(final DefaultMQProducer defaultMQProducer, RPCHook rpcHook) {
 
         /* sav1.2 : DefaultMQProducerImpl的构造传入DefaultMQProducer和RPCHook,循环引用?*/
-        /* sav : 循环引用在rocket里还是挺多的,(或许有这个原因:推测由于很多交叉调用,这样写可以减少很多复杂度)
-        * 现在感觉原因应该是,实例了一个生产者或消费者后,如果对象是私有的有可能会被回收,甚至于编译时被优化掉,导致发送或消费不成功
+        /* sav : 循环引用在rocket里还是挺多的,所以配置垃圾回收算法的时候也需要考虑一下
+        * (或许有这个原因:推测由于很多交叉调用,这样写可以减少很多复杂度，另外，同一个组的消费在同一个客户端上复用的几率比较大，或许)
         * 而且通常一个服务器上不会有太多的producer实例,而且一旦客户端管理退出,整个应用退出,jvm会回收应用的内存
-        * 但是还是有一点要注意,不要用不同的group不停的私有创建producer这类的代码,
+        * 但是还是有一点要注意,不要用不同的group不停的私有创建producer这类的代码,还用引用计数器回收
         * 当然一般是不会有人这么干的*/
         this.defaultMQProducer = defaultMQProducer;
         this.rpcHook = rpcHook;
