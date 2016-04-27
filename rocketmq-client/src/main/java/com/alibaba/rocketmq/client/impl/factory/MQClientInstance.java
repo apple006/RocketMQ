@@ -237,6 +237,7 @@ public class MQClientInstance {
             }
         }, 10, this.clientConfig.getPollNameServerInteval(), TimeUnit.MILLISECONDS);
 
+        /* sav : 分别可重入锁,清除不在线broker，然后心跳broker,并请求验证注册的消费者的topic是否可以正常访问crc32*/
         this.scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
 
             @Override
