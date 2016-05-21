@@ -24,6 +24,8 @@ import com.alibaba.rocketmq.tools.command.SubCommand;
  * @since: 13-9-12
  */
 public class GetConsumerStatusCommand implements SubCommand {
+
+    /* sav : 然而这个命令的名字是 consumerStatus*/
     @Override
     public String commandName() {
         return "getConsumerStatus";
