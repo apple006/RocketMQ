@@ -194,7 +194,7 @@ public class DefaultMQProducerImpl implements MQProducerInner {
                     MQClientManager.getInstance().getAndCreateMQClientInstance(this.defaultMQProducer,
                         rpcHook);
 
-            /* sav : 以组名为key注册生产者
+            /* sav : 以组名为key注册生产者, 所以同一个实例中，不能实例多个同名的生产者，这点在多主的情况下需要注意
             * 将this注册入MQClientInstance的producerTable(相似作用的集合都使用的ConcurrentHashMap)
             * MQProducerInner:interface
             * */
