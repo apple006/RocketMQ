@@ -350,6 +350,7 @@ public class MQClientInstance {
         while (it.hasNext()) {
             Entry<String, MQConsumerInner> entry = it.next();
             MQConsumerInner impl = entry.getValue();
+            /* saaav : {pull，push}*{LocalFileOffsetStore，RemoteBrokerOffsetStore} */
             impl.persistConsumerOffset();
         }
     }
