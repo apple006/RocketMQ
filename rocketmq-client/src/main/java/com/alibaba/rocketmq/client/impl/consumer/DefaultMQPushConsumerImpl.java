@@ -643,10 +643,13 @@ public class DefaultMQPushConsumerImpl implements MQConsumerInner {
         switch (this.serviceState) {
         case CREATE_JUST:
             log.info("the consumer [{}] start beginning. messageModel={}, isUnitMode={}",
-                this.defaultMQPushConsumer.getConsumerGroup(), this.defaultMQPushConsumer.getMessageModel(),
-                this.defaultMQPushConsumer.isUnitMode());
+                this.defaultMQPushConsumer.getConsumerGroup(), this.defaultMQPushConsumer.getMessageModel()/* saaav : 集群或广播*/,
+                this.defaultMQPushConsumer.isUnitMode()/* saaav : 订阅组单元是否可选？*/);
+
+            /* saaav : 先服务状态设置为启动失败*/
             this.serviceState = ServiceState.START_FAILED;
 
+            /* saaav : check组名，消息，ConsumeFromWhere，时间戳(可用于如getOffsetInQueueByTime)，队列分配策略，订阅过滤条件，监听器*/
             this.checkConfig();
 
             this.copySubscription();
