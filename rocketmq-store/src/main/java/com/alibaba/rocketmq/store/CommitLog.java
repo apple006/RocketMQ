@@ -528,7 +528,7 @@ public class CommitLog {
         long eclipseTimeInLock = 0;
         synchronized (this) {
             long beginLockTimestamp = this.defaultMessageStore.getSystemClock().now();
-
+/* saaav : 参考？：http://www.jianshu.com/p/453c6e7ff81c*/
             // Here settings are stored timestamp, in order to ensure an orderly
             // global
             msg.setStoreTimestamp(beginLockTimestamp);
