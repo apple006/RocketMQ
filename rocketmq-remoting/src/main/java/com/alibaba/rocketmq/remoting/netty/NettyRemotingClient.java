@@ -389,6 +389,7 @@ public class NettyRemotingClient extends NettyRemotingAbstract implements Remoti
                     }
                 }
 
+                /* saaav : 多nsrv地址时原子自增取模，选其中一个通讯，我多主独立部署的监控这样用就坑了*/
                 if (addrList != null && !addrList.isEmpty()) {
                     for (int i = 0; i < addrList.size(); i++) {
                         int index = this.namesrvIndex.incrementAndGet();
