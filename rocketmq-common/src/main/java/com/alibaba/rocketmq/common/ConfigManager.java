@@ -48,10 +48,12 @@ public abstract class ConfigManager {
     public boolean load() {
         String fileName = null;
         try {
+            /* saaav : 默认/root/store/config，加载topics.json*/
             fileName = this.configFilePath();
             String jsonString = MixAll.file2String(fileName);
             // 文件不存在，或者为空文件
             if (null == jsonString || jsonString.length() == 0) {
+                /* saaav : topics.json.bak*/
                 return this.loadBak();
             }
             else {

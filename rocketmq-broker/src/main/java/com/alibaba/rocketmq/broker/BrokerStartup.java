@@ -74,6 +74,7 @@ public class BrokerStartup {
     }
 
 
+    /* saaav : 启动broker*/
     public static void main(String[] args) {
         start(createBrokerController(args));
     }
