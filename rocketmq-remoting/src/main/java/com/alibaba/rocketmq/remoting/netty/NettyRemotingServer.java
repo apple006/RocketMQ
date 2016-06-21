@@ -183,7 +183,7 @@ public class NettyRemotingServer extends NettyRemotingAbstract implements Remoti
                         }
                     });
 
-        /* sav : 使用对外内存可以减少GC*/
+        /* sav : 使用堆外内存可以减少GC*/
         if (nettyServerConfig.isServerPooledByteBufAllocatorEnable()) {
             // 这个选项有可能会占用大量堆外内存，暂时不使用。
             childHandler.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
